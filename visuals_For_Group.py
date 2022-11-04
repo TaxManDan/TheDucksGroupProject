@@ -25,7 +25,6 @@ def main():
     text(my_number)
     set_visuals(numbers)
 
-
     # --- Finish drawing ---
     arcade.finish_render()
 
@@ -35,12 +34,12 @@ def main():
 
 def text(x):
     arcade.draw_text(x,
-                      360,     # starting x
-                      450,      # starting y
-                      arcade.color.BLACK,   # color
-                      60,       # font size
-                      width = 2,    # width
-                      align = "center") # alignment
+                     360,  # starting x
+                     450,  # starting y
+                     arcade.color.BLACK,  # color
+                     60,  # font size
+                     width=2,  # width
+                     align="center")  # alignment
 
 
 def set_numbers(x):
@@ -80,6 +79,12 @@ def draw_visuals(n, x, y):
         else:
             x = c
             y -= 30
+
+
+def on_mouse_press(x, y, button, modifiers):
+    if button == arcade.MOUSE_BUTTON_LEFT:
+        x = x
+        y = y
 
 
 main()
