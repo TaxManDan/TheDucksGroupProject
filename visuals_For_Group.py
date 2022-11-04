@@ -25,8 +25,6 @@ def main():
     text(my_number)
     set_visuals(numbers)
 
-    # on_mouse_press(my_number)
-
     # --- Finish drawing ---
     arcade.finish_render()
 
@@ -81,11 +79,6 @@ def draw_visuals(n, x, y):
         else:
             x = c
             y -= 30
-
-
-def on_mouse_press(number, button, modifiers):
-    if button == arcade.MOUSE_BUTTON_LEFT:
-        pass
 
 
 main()
