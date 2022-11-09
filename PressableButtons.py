@@ -14,8 +14,8 @@ class PressableButtons:
 
         self.draw()
     
-    def add_button(self, anchor_x, align_x, anchor_y, align_y):
-        button = arcade.gui.UIFlatButton(TEXT="", WIDTH=100)
+    def add_button(self, anchor_x, align_x, anchor_y, align_y, text):
+        button = arcade.gui.UIFlatButton(text=text, WIDTH=100)
 
         button_box = arcade.gui.UIBoxLayout() # Create a box group to align the 'open' button in the center
         button_box.add(button) # Create a button. We'll click on this to open our window.
