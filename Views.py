@@ -40,12 +40,15 @@ class HomeView(arcade.View):
 
         help_button = arcade.gui.UIFlatButton(text="HELP", width=200)
         difficulty_button = arcade.gui.UIFlatButton(text="DIFFICULTY", width=200)
+        play_button = arcade.gui.UIFlatButton(text="PLAY", width=200)
 
         button_box = arcade.gui.UIBoxLayout()  # Create a box group to align the 'open' button in the center
         button_box.add(help_button)  # Create a button. We'll click on this to open our window.
         button_box.add(difficulty_button)
+        button_box.add(play_button)
         help_button.on_click = self.on_click_help  # Add a hook to run when we click on the button.
         difficulty_button.on_click = self.on_click_difficulty
+        play_button.on_click = self.on_click_play
 
         self.manager.add(
             arcade.gui.UIAnchorWidget(
@@ -53,7 +56,7 @@ class HomeView(arcade.View):
                 anchor_x="center",
                 align_x=0,
                 anchor_y="center",
-                align_y=-250,
+                align_y=-150,
 
 
                 child=help_button
@@ -68,6 +71,16 @@ class HomeView(arcade.View):
 
 
                 child=difficulty_button
+            )
+        )
+        self.manager.add(
+            arcade.gui.UIAnchorWidget(
+                anchor_x="center",
+                align_x=0,
+                anchor_y="center",
+                align_y=150,
+
+                child=play_button
             )
         )
 
@@ -95,7 +108,7 @@ class HomeView(arcade.View):
         # The code in this function is run when we click the ok button.
         # The code below opens the message box and auto-dismisses it when done.
         message_box = arcade.gui.UIMessageBox(
-            width=225,
+            width=350,
             height=125,
             message_text=(
                 "Select the difficulty you want to play at."
@@ -108,7 +121,12 @@ class HomeView(arcade.View):
         self.manager.add(message_box)
 
     def on_diffuculty_box_close(self, button_text):
-        print(f"User pressed {button_text}.")
+        difficulty = button_text
+        print(difficulty)
+
+    def on_click_play(self, event):
+        game_view = GameView()
+        self.window.show_view(game_view)
 
     def on_draw(self):
         self.clear()
