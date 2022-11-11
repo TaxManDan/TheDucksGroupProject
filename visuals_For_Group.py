@@ -160,7 +160,7 @@ class MainGame(arcade.View):
 def main():
     """ Main function """
 
-    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, resizable=True)
     start_view = InstructionView()
     window.show_view(start_view)
     arcade.run()
