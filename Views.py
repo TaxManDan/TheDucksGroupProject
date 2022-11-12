@@ -1,6 +1,7 @@
 import arcade
 import arcade.gui
-from PressableButtons import PressableButtons
+import random
+
 
 
 class LoadingView(arcade.View):
@@ -29,12 +30,14 @@ class LoadingView(arcade.View):
 
 
 class HomeView(arcade.View):
+
     def __init__(self):
         super().__init__()
 
         # Create and enable the UIManager
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
+        self.difficulty = "Normal"
 
         arcade.set_background_color(arcade.color.LIGHT_CORNFLOWER_BLUE)
 
@@ -114,18 +117,22 @@ class HomeView(arcade.View):
                 "Select the difficulty you want to play at."
 
             ),
-            callback=self.on_diffuculty_box_close,
+            callback=self.on_difficulty_box_close,
             buttons=["Easy", "Normal", "Hard"]
         )
 
         self.manager.add(message_box)
 
-    def on_diffuculty_box_close(self, button_text):
-        difficulty = button_text
-        print(difficulty)
+    def on_difficulty_box_close(self, button_text):
+        self.difficulty = button_text
+        print(self.difficulty)
 
     def on_click_play(self, event):
-        game_view = GameView()
+        difficulty = self.difficulty
+        if difficulty == "Easy":
+            game_view = EasyView()
+        elif difficulty == "Normal":
+            game_view = NormalView()
         self.window.show_view(game_view)
 
     def on_draw(self):
@@ -133,21 +140,94 @@ class HomeView(arcade.View):
         self.manager.draw()
 
 
-class GameView(arcade.View):
+class EasyView(arcade.View):
     def __init__(self):
         super().__init__()
-        arcade.set_background_color(arcade.color.LIGHT_CORNFLOWER_BLUE)
-
-        # Create and enable the UIManager
+        # set a background color
+        arcade.set_background_color(arcade.color.CITRON)
+        self.clear()
+        # --- Required for all code that uses UI element,
+        # a UIManager to handle the UI.
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
 
-        buttons = PressableButtons(self.manager)
+        # set a random number between 1-20
+        self.my_number = random.randrange(1, 20)
 
-    def on_draw(self):
+        self.numbers = self.set_numbers()
+        self.numbers.append(self.my_number)
+        self.text()
+        self.set_visuals()
+        # --- Finish drawing ---
+        arcade.finish_render()
+        # Keep the window up until someone closes it.
+
+    def text(self):
+        arcade.draw_text(self.my_number,
+                         360,  # starting x
+                         450,  # starting y
+                         arcade.color.BLACK,  # color
+                         60,  # font size
+                         width=2,  # width
+                         align="center")  # alignment
+
+    def set_numbers(self):
+
+        num1 = random.choice([i for i in range(1, 20) if i != self.my_number])
+        num2 = random.choice([i for i in range(1, 20) if i != self.my_number and i != num1])
+
+        return [num1, num2]
+
+    def set_visuals(self):
+        arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.CORN)
+        x1 = 100
+        y1 = 200
+        n1 = random.choice(self.numbers)
+        self.draw_visuals(n1, x1, y1)
+
+        self.numbers.remove(n1)
+        x2 = 350
+        y2 = 200
+        n2 = random.choice(self.numbers)
+
+        self.draw_visuals(n2, x2, y2)
+
+        self.numbers.remove(n2)
+        x3 = 600
+        y3 = 200
+        n3 = self.numbers[0]
+
+        self.draw_visuals(n3, x3, y3)
+
+    def draw_visuals(self, n, x, y):
+        # Split the Screen
+        # Rectangle (left, right, top, bottom)
+        c = x
+        z = x + 80
+        for i in range(n):
+            arcade.draw_circle_filled(x, 10 + y, 10, arcade.color.BLACK)
+            if x < z:
+                x += 30
+            else:
+                x = c
+                y -= 30
+
+
+class NormalView(arcade.View):
+    def __init__(self):
+        super().__init__()
+        # set a background color
+        arcade.set_background_color(arcade.color.CITRON)
         self.clear()
-        self.manager.draw()
+        # --- Required for all code that uses UI element,
+        # a UIManager to handle the UI.
+        self.manager = arcade.gui.UIManager()
+        self.manager.enable()
 
+        # set a random number between 1-20
+
+        # --- Finish drawing ---
+        arcade.finish_render()
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
