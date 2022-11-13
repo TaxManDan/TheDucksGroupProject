@@ -162,17 +162,17 @@ class MainGame(arcade.View):
         # checks the square and passes input to the answer function to get checked
         if 0 < x < 100 and 0 < y < 200:  # Incorrect for now
             # First choice (left)
-            self.p.append("1")
+            self.p.append("1")  # Might need to remove from array once click is deemed correct or not
             print("You chose" + str(self.p))
 
         elif 101 < x < 350 and 0 < y < 200:  # Incorrect for now
             # Second choice (Middle)
-            self.p.append("2")
+            self.p.append("2")  # Might need to remove from array once click is deemed correct or not
             print("You chose" + str(self.p))
 
         elif 351 < x < 600 and 0 < y < 200:  # Incorrect for now
             # Third choice (right)
-            self.p.append("3")
+            self.p.append("3")  # Might need to remove from array once click is deemed correct or not
             print("You chose" + str(self.p))
 
 
