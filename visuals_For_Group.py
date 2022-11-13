@@ -22,23 +22,21 @@ class InstructionView(arcade.View):
         # to reset the viewport back to the start so we can see what we draw.
         arcade.set_viewport(0, self.window.width, 0, self.window.height)
 
-
     def on_draw(self):
         """ Draw this view """
         self.clear()
         arcade.draw_text("Welcome to the Math Game", self.window.width / 2, self.window.height / 1.5,
                          arcade.color.WHITE, font_size=40, anchor_x="center")
         # arcade.draw_text("Click to Start", self.window.width / 2, self.window.height / 2-75,
-                         # arcade.color.WHITE, font_size=20, anchor_x="center")
+        # arcade.color.WHITE, font_size=20, anchor_x="center")
         start_button = arcade.gui.UIFlatButton(text="Click Here To Start",
                                                width=200)
         instruction_button = arcade.gui.UIFlatButton(text="Click Here For Instructions",
-                                               width=200)
+                                                     width=200)
 
         # Assigning our on_buttonclick() function
         start_button.on_click = self.on_startclick
         instruction_button.on_click = self.on_instructionclick
-
 
         # Adding button in our uimanager
         self.uimanager.add(
@@ -85,6 +83,7 @@ class InstructionView(arcade.View):
     def on_message_box_close(self, button_text):
         print(f"User pressed {button_text}.")
 
+
 class MainGame(arcade.View):
     def __init__(self):
         super().__init__()
@@ -106,6 +105,8 @@ class MainGame(arcade.View):
         # --- Finish drawing ---
         arcade.finish_render()
         # Keep the window up until someone closes it.
+
+        self.p = []  # Used for player input
 
     def text(self):
         arcade.draw_text(self.my_number,
@@ -157,6 +158,24 @@ class MainGame(arcade.View):
                 x = c
                 y -= 30
 
+    def on_mouse_press(self, x, y, button, modifiers):
+        # checks the square and passes input to the answer function to get checked
+        if 0 < x < 100 and 0 < y < 200:  # Incorrect for now
+            # First choice (left)
+            self.p.append("1")
+            print("You chose" + str(self.p))
+
+        elif 101 < x < 350 and 0 < y < 200:  # Incorrect for now
+            # Second choice (Middle)
+            self.p.append("2")
+            print("You chose" + str(self.p))
+
+        elif 351 < x < 600 and 0 < y < 200:  # Incorrect for now
+            # Third choice (right)
+            self.p.append("3")
+            print("You chose" + str(self.p))
+
+
 def main():
     """ Main function """
 
@@ -168,4 +187,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
