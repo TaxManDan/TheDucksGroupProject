@@ -8,7 +8,7 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 SCREEN_TITLE = "Math Game"
 
-class MainGame(arcade.View):
+class Game(arcade.View):
     def __init__(self):
         super().__init__()
         # set a background color

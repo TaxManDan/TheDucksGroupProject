@@ -1,12 +1,13 @@
 # import the arcade library
 import arcade
 import arcade.gui
+from game import Game
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 SCREEN_TITLE = "Math Game"
 
-class InstructionView(arcade.View):
+class StartMenu(arcade.View):
     """ View to show instructions """
 
     def on_show_view(self):
@@ -56,7 +57,7 @@ class InstructionView(arcade.View):
 
     def on_startclick(self, event):
         """ If the user presses the mouse button, start the game. """
-        main_game = MainGame()
+        main_game = Game()
         # main_game.set_visuals()
         self.window.show_view(main_game)
 
@@ -85,6 +86,6 @@ if __name__ == "__main__":
     """ Main function """
 
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, resizable=True)
-    start_view = InstructionView()
+    start_view = StartMenu()
     window.show_view(start_view)
     arcade.run()
