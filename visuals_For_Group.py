@@ -118,7 +118,6 @@ class MainGame(arcade.View):
                          align="center")  # alignment
 
     def set_numbers(self):
-
         num1 = random.choice([i for i in range(1, 20) if i != self.my_number])
         num2 = random.choice([i for i in range(1, 20) if i != self.my_number and i != num1])
 
@@ -126,24 +125,12 @@ class MainGame(arcade.View):
 
     def set_visuals(self):
         arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.CORN)
-        x1 = 100
-        y1 = 200
-        n1 = random.choice(self.numbers)
-        self.draw_visuals(n1, x1, y1)
-
-        self.numbers.remove(n1)
-        x2 = 350
-        y2 = 200
-        n2 = random.choice(self.numbers)
-
-        self.draw_visuals(n2, x2, y2)
-
-        self.numbers.remove(n2)
-        x3 = 600
-        y3 = 200
-        n3 = self.numbers[0]
-
-        self.draw_visuals(n3, x3, y3)
+        coords = [(100, 200), (350, 200), (600, 200)]
+        for coord in coords:
+            x = coord[0]
+            y = coord[1]
+            n = random.choice(self.numbers)
+            self.draw_visuals(n, x, y)
 
     def draw_visuals(self, n, x, y):
         # Split the Screen
@@ -183,7 +170,6 @@ def main():
     start_view = InstructionView()
     window.show_view(start_view)
     arcade.run()
-
 
 if __name__ == "__main__":
     main()
