@@ -126,9 +126,7 @@ class MainGame(arcade.View):
     def set_visuals(self):
         arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.CORN)
         coords = [(100, 200), (350, 200), (600, 200)]
-        for coord in coords:
-            x = coord[0]
-            y = coord[1]
+        for (x, y) in coords:
             n = random.choice(self.numbers)
             self.draw_visuals(n, x, y)
 
