@@ -1,6 +1,7 @@
 import arcade
 import arcade.gui
 import random
+from add_multiply_visuals import Addition, Multiplication
 
 
 
@@ -132,7 +133,9 @@ class HomeView(arcade.View):
         if difficulty == "Easy":
             game_view = EasyView()
         elif difficulty == "Normal":
-            game_view = NormalView()
+            game_view = Addition()
+        else:
+            game_view = Multiplication()
         self.window.show_view(game_view)
 
     def on_draw(self):
@@ -213,21 +216,6 @@ class EasyView(arcade.View):
                 y -= 30
 
 
-class NormalView(arcade.View):
-    def __init__(self):
-        super().__init__()
-        # set a background color
-        arcade.set_background_color(arcade.color.CITRON)
-        self.clear()
-        # --- Required for all code that uses UI element,
-        # a UIManager to handle the UI.
-        self.manager = arcade.gui.UIManager()
-        self.manager.enable()
-
-        # set a random number between 1-20
-
-        # --- Finish drawing ---
-        arcade.finish_render()
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
