@@ -4,10 +4,6 @@ import arcade.gui
 # import random library
 import random
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-SCREEN_TITLE = "Math Game"
-
 class Game(arcade.View):
     def __init__(self):
         super().__init__()
