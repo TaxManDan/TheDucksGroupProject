@@ -145,17 +145,17 @@ class MainGame(arcade.View):
 
     def on_mouse_press(self, x, y, button, modifiers):
         # checks the square and passes input to the answer function to get checked
-        if 90 < x < 200 and 70 < y < 240:
+        if 80 < x < 210 and 70 < y < 230:
             # First choice (left)
             self.p.append("1")  # Might need to remove from array once click is deemed correct or not
             print("You chose" + str(self.p))
 
-        elif 340 < x < 450 and 70 < y < 240:
+        elif 330 < x < 460 and 70 < y < 230:
             # Second choice (Middle)
             self.p.append("2")  # Might need to remove from array once click is deemed correct or not
             print("You chose" + str(self.p))
 
-        elif 590 < x < 700 and 70 < y < 240:
+        elif 580 < x < 710 and 70 < y < 230:
             # Third choice (right)
             self.p.append("3")  # Might need to remove from array once click is deemed correct or not
             print("You chose" + str(self.p))
