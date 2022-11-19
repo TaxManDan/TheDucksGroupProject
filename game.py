@@ -3,6 +3,9 @@ import arcade
 import arcade.gui
 # import random library
 import random
+from add_multiply_visuals import Matching
+from add_multiply_visuals import Addition
+from add_multiply_visuals import Multiplication
 
 
 class Game(arcade.View):
