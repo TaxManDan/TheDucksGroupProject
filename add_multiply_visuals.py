@@ -53,9 +53,9 @@ class Matching(arcade.View):
     def set_visuals(self):
         arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.CORN)
 
-        self.box1 = arcade.draw_lrtb_rectangle_filled(80, 210, 230, 70, arcade.color.WHITE)
-        self.box2 = arcade.draw_lrtb_rectangle_filled(330, 460, 230, 70, arcade.color.WHITE)
-        self.box3 = arcade.draw_lrtb_rectangle_filled(580, 710, 230, 70, arcade.color.WHITE)
+        self.box1 = arcade.draw_lrtb_rectangle_filled(80, 210, 230, 70, arcade.color.CITRON)
+        self.box2 = arcade.draw_lrtb_rectangle_filled(330, 460, 230, 70, arcade.color.CITRON)
+        self.box3 = arcade.draw_lrtb_rectangle_filled(580, 710, 230, 70, arcade.color.CITRON)
 
         x1 = 100
         y1 = 200
@@ -142,9 +142,9 @@ class Addition(arcade.View):
         arcade.draw_text("=  ?", 550, 450,
                          arcade.color.WHITE, font_size=60, anchor_x="center")
 
-        self.box1 = arcade.draw_lrtb_rectangle_filled(70, 230, 300, 150, arcade.color.WHITE)
-        self.box2 = arcade.draw_lrtb_rectangle_filled(330, 460, 300, 150, arcade.color.WHITE)
-        self.box3 = arcade.draw_lrtb_rectangle_filled(600, 740, 300, 150, arcade.color.WHITE)
+        self.box1 = arcade.draw_lrtb_rectangle_filled(70, 230, 300, 150, arcade.color.LIGHT_BLUE)
+        self.box2 = arcade.draw_lrtb_rectangle_filled(330, 470, 300, 150, arcade.color.LIGHT_BLUE)
+        self.box3 = arcade.draw_lrtb_rectangle_filled(600, 740, 300, 150, arcade.color.LIGHT_BLUE)
 
     def answers(self):
         # randomly set the answers in range 0, 200 max is 100 + 100
@@ -209,9 +209,9 @@ class Multiplication(arcade.View):
         arcade.draw_text("=  ?", 550, 450,
                          arcade.color.BLACK, font_size=60, anchor_x="center")
 
-        self.box1 = arcade.draw_lrtb_rectangle_filled(70, 230, 300, 150, arcade.color.WHITE)
-        self.box2 = arcade.draw_lrtb_rectangle_filled(330, 460, 300, 150, arcade.color.WHITE)
-        self.box3 = arcade.draw_lrtb_rectangle_filled(600, 740, 300, 150, arcade.color.WHITE)
+        self.box1 = arcade.draw_lrtb_rectangle_filled(70, 230, 300, 150, arcade.color.ORANGE_PEEL)
+        self.box2 = arcade.draw_lrtb_rectangle_filled(330, 470, 300, 150, arcade.color.ORANGE_PEEL)
+        self.box3 = arcade.draw_lrtb_rectangle_filled(600, 740, 300, 150, arcade.color.ORANGE_PEEL)
 
     def answers(self):
         # add the answers to list a in range 0,144 because max is 12*12
