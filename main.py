@@ -35,7 +35,6 @@ class HomeView(arcade.View):
                 anchor_y="center",
                 align_y=-150,
 
-
                 child=help_button
             )
         )
@@ -45,7 +44,6 @@ class HomeView(arcade.View):
                 align_x=0,
                 anchor_y="center",
                 align_y=0,
-
 
                 child=difficulty_button
             )
@@ -60,7 +58,6 @@ class HomeView(arcade.View):
                 child=play_button
             )
         )
-
 
     def on_click_help(self, event):
         # The code in this function is run when we click the ok button.
@@ -128,5 +125,6 @@ def main():
     start_view = HomeView()
     window.show_view(start_view)
     arcade.run()
+
 
 main()

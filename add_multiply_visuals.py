@@ -12,6 +12,9 @@ SCREEN_TITLE = "Math Game"
 class Matching(arcade.View):
     def __init__(self):
         super().__init__()
+        self.box1 = None
+        self.box2 = None
+        self.box3 = None
         # set a background color
         arcade.set_background_color(arcade.color.CITRON)
         self.clear()
@@ -49,6 +52,11 @@ class Matching(arcade.View):
 
     def set_visuals(self):
         arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.CORN)
+
+        self.box1 = arcade.draw_lrtb_rectangle_filled(80, 210, 230, 70, arcade.color.WHITE)
+        self.box2 = arcade.draw_lrtb_rectangle_filled(330, 460, 230, 70, arcade.color.WHITE)
+        self.box3 = arcade.draw_lrtb_rectangle_filled(580, 710, 230, 70, arcade.color.WHITE)
+
         x1 = 100
         y1 = 200
         n1 = random.choice(self.numbers)
@@ -82,10 +90,12 @@ class Matching(arcade.View):
                 y -= 30
 
 
-
 class Addition(arcade.View):
     def __init__(self):
         super().__init__()
+        self.box1 = None
+        self.box2 = None
+        self.box3 = None
         # set a background color
         arcade.set_background_color(arcade.color.AFRICAN_VIOLET)
         self.clear()
@@ -132,6 +142,10 @@ class Addition(arcade.View):
         arcade.draw_text("=  ?", 550, 450,
                          arcade.color.WHITE, font_size=60, anchor_x="center")
 
+        self.box1 = arcade.draw_lrtb_rectangle_filled(70, 230, 300, 150, arcade.color.WHITE)
+        self.box2 = arcade.draw_lrtb_rectangle_filled(330, 460, 300, 150, arcade.color.WHITE)
+        self.box3 = arcade.draw_lrtb_rectangle_filled(600, 740, 300, 150, arcade.color.WHITE)
+
     def answers(self):
         # randomly set the answers in range 0, 200 max is 100 + 100
         ans = self.ans
@@ -160,6 +174,9 @@ class Addition(arcade.View):
 class Multiplication(arcade.View):
     def __init__(self):
         super().__init__()
+        self.box1 = None
+        self.box2 = None
+        self.box3 = None
         # set a background color
         arcade.set_background_color(arcade.color.ALABAMA_CRIMSON)
         self.clear()
@@ -191,6 +208,10 @@ class Multiplication(arcade.View):
                          arcade.color.BLACK, font_size=60, anchor_x="center")
         arcade.draw_text("=  ?", 550, 450,
                          arcade.color.BLACK, font_size=60, anchor_x="center")
+
+        self.box1 = arcade.draw_lrtb_rectangle_filled(70, 230, 300, 150, arcade.color.WHITE)
+        self.box2 = arcade.draw_lrtb_rectangle_filled(330, 460, 300, 150, arcade.color.WHITE)
+        self.box3 = arcade.draw_lrtb_rectangle_filled(600, 740, 300, 150, arcade.color.WHITE)
 
     def answers(self):
         # add the answers to list a in range 0,144 because max is 12*12

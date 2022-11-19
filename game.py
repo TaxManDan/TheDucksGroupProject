@@ -4,6 +4,7 @@ import arcade.gui
 # import random library
 import random
 
+
 class Game(arcade.View):
     def __init__(self):
         super().__init__()
@@ -22,11 +23,10 @@ class Game(arcade.View):
         self.numbers.append(self.my_number)
         self.text()
         self.set_visuals()
+
         # --- Finish drawing ---
         arcade.finish_render()
         # Keep the window up until someone closes it.
-
-        self.p = []  # Used for player input
 
     def text(self):
         arcade.draw_text(self.my_number,
@@ -47,10 +47,6 @@ class Game(arcade.View):
         arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.CORN)
         coords = [(100, 200), (350, 200), (600, 200)]
 
-        arcade.draw_lrtb_rectangle_filled(80, 210, 230, 70, arcade.color.CITRON)
-        arcade.draw_lrtb_rectangle_filled(330, 460, 230, 70, arcade.color.CITRON)
-        arcade.draw_lrtb_rectangle_filled(580, 710, 230, 70, arcade.color.CITRON)
-
         for (x, y) in coords:
             n = random.choice(self.numbers)
             self.draw_visuals(n, x, y)
@@ -68,19 +64,10 @@ class Game(arcade.View):
                 x = c
                 y -= 30
 
-    def on_mouse_press(self, x, y, button, modifiers):
-        # checks the square and passes input to the answer function to get checked
-        if 80 < x < 210 and 70 < y < 230:
-            # First choice (left)
-            self.p.append("1")  # Might need to remove from array once click is deemed correct or not
-            print("You chose" + str(self.p))
 
-        elif 330 < x < 460 and 70 < y < 230:
-            # Second choice (Middle)
-            self.p.append("2")  # Might need to remove from array once click is deemed correct or not
-            print("You chose" + str(self.p))
+class Correct:
+    pass
 
-        elif 580 < x < 710 and 70 < y < 230:
-            # Third choice (right)
-            self.p.append("3")  # Might need to remove from array once click is deemed correct or not
-            print("You chose" + str(self.p))
+
+class Incorrect:
+    pass
