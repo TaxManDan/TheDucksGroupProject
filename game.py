@@ -3,9 +3,7 @@ import arcade
 import arcade.gui
 # import random library
 import random
-from add_multiply_visuals import Matching
-from add_multiply_visuals import Addition
-from add_multiply_visuals import Multiplication
+from add_multiply_visuals import Addition, Multiplication, Matching
 
 
 class Game(arcade.View):
@@ -69,7 +67,8 @@ class Game(arcade.View):
 
 
 class Correct:
-    pass
+    game_over = False
+    player_correct = False
 
 
 class Incorrect:
