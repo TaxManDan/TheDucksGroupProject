@@ -202,10 +202,7 @@ class MainGame(arcade.View):
 
 
 def correct(x, a):
-    if x == a:
-        return True
-    else:
-        return False
+    return x == a
 
 
 def main():

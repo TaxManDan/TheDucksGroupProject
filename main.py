@@ -4,7 +4,6 @@ from add_multiply_visuals import Addition, Multiplication, Matching
 
 
 class HomeView(arcade.View):
-
     def __init__(self):
         super().__init__()
 
@@ -27,37 +26,24 @@ class HomeView(arcade.View):
         difficulty_button.on_click = self.on_click_difficulty
         play_button.on_click = self.on_click_play
 
-        self.manager.add(
-            arcade.gui.UIAnchorWidget(
-                # Positioning for first option
-                anchor_x="center",
-                align_x=0,
-                anchor_y="center",
-                align_y=-150,
+        buttons = [
+            (0, -150, help_button),
+            (0, 0, difficulty_button),
+            (0, 150, play_button)
+        ]
 
-                child=help_button
-            )
-        )
-        self.manager.add(
-            arcade.gui.UIAnchorWidget(
-                anchor_x="center",
-                align_x=0,
-                anchor_y="center",
-                align_y=0,
+        for (x, y, button) in buttons:
+            self.manager.add(
+                arcade.gui.UIAnchorWidget(
+                    # Positioning
+                    anchor_x="center",
+                    align_x=x,
+                    anchor_y="center",
+                    align_y=y,
 
-                child=difficulty_button
+                    child=button
+                )
             )
-        )
-        self.manager.add(
-            arcade.gui.UIAnchorWidget(
-                anchor_x="center",
-                align_x=0,
-                anchor_y="center",
-                align_y=150,
-
-                child=play_button
-            )
-        )
 
     def on_click_help(self, event):
         # The code in this function is run when we click the ok button.
@@ -117,7 +103,6 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 SCREEN_TITLE = "Ducks Matching Game"
 
-
 def main():
     """ Main function """
 
@@ -125,6 +110,5 @@ def main():
     start_view = HomeView()
     window.show_view(start_view)
     arcade.run()
-
 
 main()

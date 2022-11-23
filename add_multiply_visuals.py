@@ -4,17 +4,11 @@ import arcade.gui
 # import random library
 import random
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-SCREEN_TITLE = "Math Game"
-
+# CHANGE on_mouse_press COORDS FOR ADDITION
 
 class Matching(arcade.View):
     def __init__(self):
         super().__init__()
-        self.box1 = None
-        self.box2 = None
-        self.box3 = None
         # set a background color
         arcade.set_background_color(arcade.color.CITRON)
         self.clear()
@@ -26,8 +20,11 @@ class Matching(arcade.View):
         # set a random number between 1-20
         self.my_number = random.randrange(1, 20)
 
+        # Create self.numbers and randomize it
         self.numbers = self.set_numbers()
         self.numbers.append(self.my_number)
+        random.shuffle(self.numbers)
+
         self.text()
         self.set_visuals()
         # --- Finish drawing ---
@@ -51,30 +48,22 @@ class Matching(arcade.View):
         return [num1, num2]
 
     def set_visuals(self):
+        # Draw background
         arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.CORN)
+        # Draw background of options
+        arcade.draw_lrtb_rectangle_filled(80, 210, 230, 70, arcade.color.CITRON)
+        arcade.draw_lrtb_rectangle_filled(330, 460, 230, 70, arcade.color.CITRON)
+        arcade.draw_lrtb_rectangle_filled(580, 710, 230, 70, arcade.color.CITRON)
 
-        self.box1 = arcade.draw_lrtb_rectangle_filled(80, 210, 230, 70, arcade.color.CITRON)
-        self.box2 = arcade.draw_lrtb_rectangle_filled(330, 460, 230, 70, arcade.color.CITRON)
-        self.box3 = arcade.draw_lrtb_rectangle_filled(580, 710, 230, 70, arcade.color.CITRON)
-
-        x1 = 100
-        y1 = 200
-        n1 = random.choice(self.numbers)
-        self.draw_visuals(n1, x1, y1)
-
-        self.numbers.remove(n1)
-        x2 = 350
-        y2 = 200
-        n2 = random.choice(self.numbers)
-
-        self.draw_visuals(n2, x2, y2)
-
-        self.numbers.remove(n2)
-        x3 = 600
-        y3 = 200
-        n3 = self.numbers[0]
-
-        self.draw_visuals(n3, x3, y3)
+        # x, y, n
+        coords = [
+            (100, 200, self.numbers[0]),
+            (350, 200, self.numbers[1]),
+            (600, 200, self.numbers[2])
+        ]
+        
+        for (x, y, n) in coords:
+            self.draw_visuals(n, x, y)
 
     def draw_visuals(self, n, x, y):
         # Split the Screen
@@ -88,95 +77,127 @@ class Matching(arcade.View):
             else:
                 x = c
                 y -= 30
+    
+    # Creating function to check the mouse clicks
+    def on_mouse_press(self, x, y, button, modifiers):
+        # x_low, x_high, y_low, y_high, number
+        coords = [
+            (80, 210, 70, 230, self.numbers[0]),
+            (330, 460, 70, 230, self.numbers[1]),
+            (580, 710, 70, 230, self.numbers[2])
+        ]
+
+        for (x_low, x_high, y_low, y_high, number) in coords:
+            if x_low < x < x_high and y_low < y < y_high:
+                if number == self.my_number:
+                    print("Y")
+                else:
+                    print("N")
 
 
 class Addition(arcade.View):
     def __init__(self):
         super().__init__()
-        self.box1 = None
-        self.box2 = None
-        self.box3 = None
-        # set a background color
+        # Set a background color
         arcade.set_background_color(arcade.color.AFRICAN_VIOLET)
         self.clear()
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
 
         # there can be addition or subtraction
-        self.symbols = ['+', '-']
-        self.s = random.choice(self.symbols)
+        self.symbol = random.choice(['+', '-'])
 
-        # this empty list will hold the answers
-        self.a = []
+        # This empty list will hold the answers
+        self.answers = []
 
-        # set the first value
+        # Set the first value
         self.n1 = random.randrange(0, 100)
 
         # I used an if statement because we don't want negative numbers when we subtract
-        if self.s == '+':
+        if self.symbol == '+':
             self.n2 = random.randrange(0, 100)
-            self.ans = self.n1 + self.n2
-            # add the answer to the list
-            self.a.append(self.ans)
-
+            # Add the answer to the list
+            self.answer = self.n1 + self.n2
         else:
             self.n2 = random.randrange(0, self.n1)
-            self.ans = self.n1 - self.n2
-            self.a.append(self.ans)
+            self.answer = self.n1 - self.n2
+        self.answers.append(self.answer)
 
-        # draw the board
+        # Draw the board
         arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.BABY_BLUE_EYES)
-        self.answers()
+        self.set_answers()
         self.draw_problem()
         self.draw_answers()
         arcade.finish_render()
 
     def draw_problem(self):
-        # draw the problem
-        arcade.draw_text(self.n1, 200, 450,
-                         arcade.color.WHITE, font_size=60, anchor_x="center")
-        arcade.draw_text(self.s, 300, 450,
-                         arcade.color.WHITE, font_size=60, anchor_x="center")
-        arcade.draw_text(self.n2, 400, 450,
-                         arcade.color.WHITE, font_size=60, anchor_x="center")
-        arcade.draw_text("=  ?", 550, 450,
-                         arcade.color.WHITE, font_size=60, anchor_x="center")
+        # Draw the problem
+        coords = [
+            (200, 450, self.n1),
+            (300, 450, self.symbol),
+            (400, 450, self.n2),
+            (550, 450, "=  ?")
+        ]
 
-        self.box1 = arcade.draw_lrtb_rectangle_filled(70, 230, 300, 150, arcade.color.LIGHT_BLUE)
-        self.box2 = arcade.draw_lrtb_rectangle_filled(330, 470, 300, 150, arcade.color.LIGHT_BLUE)
-        self.box3 = arcade.draw_lrtb_rectangle_filled(600, 740, 300, 150, arcade.color.LIGHT_BLUE)
+        for (x, y, text) in coords:
+            arcade.draw_text(
+                text, x, y,
+                arcade.color.WHITE,
+                font_size=60,
+                anchor_x="center"
+            )
 
-    def answers(self):
+    def set_answers(self):
         # randomly set the answers in range 0, 200 max is 100 + 100
-        ans = self.ans
-        a = self.a
-        ans2 = random.choice([i for i in range(0, 200) if i != ans])
-        ans3 = random.choice([i for i in range(0, 200) if i != ans and i != ans2])
-        a.append(ans2)
-        a.append(ans3)
+        ans1 = self.answers[0]
+        ans2 = random.choice([i for i in range(0, 200) if i != ans1])
+        ans3 = random.choice([i for i in range(0, 200) if i != ans1 and i != ans2])
+        self.answers.append(ans2)
+        self.answers.append(ans3)
+
+        # Use random.shuffle and to randomize the 3 options
+        random.shuffle(self.answers)
 
     def draw_answers(self):
-        # use random.choice and remove to randomly place the 3 answers
-        a = self.a
-        n1 = random.choice(a)
-        a.remove(n1)
-        n2 = random.choice(a)
-        a.remove(n2)
-        n3 = a[0]
-        arcade.draw_text(n1, 150, 200,
-                         arcade.color.BANANA_MANIA, font_size=60, anchor_x="center")
-        arcade.draw_text(n2, 400, 200,
-                         arcade.color.BANANA_MANIA, font_size=60, anchor_x="center")
-        arcade.draw_text(n3, 670, 200,
-                         arcade.color.BANANA_MANIA, font_size=60, anchor_x="center")
+        # Draw the boxes behind the options
+        arcade.draw_lrtb_rectangle_filled(70, 230, 300, 150, arcade.color.LIGHT_BLUE)
+        arcade.draw_lrtb_rectangle_filled(330, 470, 300, 150, arcade.color.LIGHT_BLUE)
+        arcade.draw_lrtb_rectangle_filled(600, 740, 300, 150, arcade.color.LIGHT_BLUE)
 
+        # x, y, n
+        coords = [
+            (150, 200, self.answers[0]),
+            (400, 200, self.answers[1]),
+            (670, 200, self.answers[2])
+        ]
+
+        for (x, y, n) in coords:
+            arcade.draw_text(
+                n, x, y,
+                arcade.color.BANANA_MANIA,
+                font_size=60,
+                anchor_x="center"
+            )
+
+    # Creating function to check the mouse clicks
+    def on_mouse_press(self, x, y, button, modifiers):
+        # x_low, x_high, y_low, y_high, number
+        coords = [
+            (70, 230, 150, 300, self.answers[0]),
+            (330, 470, 150, 300, self.answers[1]),
+            (600, 740, 150, 300, self.answers[2])
+        ]
+
+        for (x_low, x_high, y_low, y_high, number) in coords:
+            if x_low < x < x_high and y_low < y < y_high:
+                if number == self.answer:
+                    print("Y")
+                else:
+                    print("N")
 
 class Multiplication(arcade.View):
     def __init__(self):
         super().__init__()
-        self.box1 = None
-        self.box2 = None
-        self.box3 = None
         # set a background color
         arcade.set_background_color(arcade.color.ALABAMA_CRIMSON)
         self.clear()
@@ -187,52 +208,80 @@ class Multiplication(arcade.View):
         self.n1 = random.randrange(0, 12)
         self.n2 = random.randrange(0, 12)
 
-        # set the answer and add to a list
-        self.ans = self.n1 * self.n2
-        self.a = [self.ans]
+        # Set the answer and add to a list
+        self.answer = self.n1 * self.n2
+        self.answers = [self.answer]
 
         # draw the game
         arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.BURNT_ORANGE)
-        self.answers()
+        self.set_answers()
         self.draw_problem()
         self.draw_answers()
         arcade.finish_render()
 
     def draw_problem(self):
-        # draw the problem
-        arcade.draw_text(self.n1, 200, 450,
-                         arcade.color.BLACK, font_size=60, anchor_x="center")
-        arcade.draw_text('x', 300, 450,
-                         arcade.color.BLACK, font_size=60, anchor_x="center")
-        arcade.draw_text(self.n2, 400, 450,
-                         arcade.color.BLACK, font_size=60, anchor_x="center")
-        arcade.draw_text("=  ?", 550, 450,
-                         arcade.color.BLACK, font_size=60, anchor_x="center")
+        # Draw the problem
+        # x, y, text
+        coords = [
+            (200, 450, self.n1),
+            (300, 450, "x"),
+            (400, 450, self.n2),
+            (550, 450, "=  ?")
+        ]
 
-        self.box1 = arcade.draw_lrtb_rectangle_filled(70, 230, 300, 150, arcade.color.ORANGE_PEEL)
-        self.box2 = arcade.draw_lrtb_rectangle_filled(330, 470, 300, 150, arcade.color.ORANGE_PEEL)
-        self.box3 = arcade.draw_lrtb_rectangle_filled(600, 740, 300, 150, arcade.color.ORANGE_PEEL)
+        for (x, y, text) in coords:
+            arcade.draw_text(
+                text, x, y,
+                arcade.color.BLACK,
+                font_size=60,
+                anchor_x="center"
+            )
 
-    def answers(self):
+    def set_answers(self):
         # add the answers to list a in range 0,144 because max is 12*12
-        ans = self.ans
-        a = self.a
-        ans2 = random.choice([i for i in range(0, 144) if i != ans])
-        ans3 = random.choice([i for i in range(0, 144) if i != ans and i != ans2])
-        a.append(ans2)
-        a.append(ans3)
+        ans1 = self.answers[0]
+        ans2 = random.choice([i for i in range(0, 144) if i != ans1])
+        ans3 = random.choice([i for i in range(0, 144) if i != ans1 and i != ans2])
+
+        self.answers.append(ans2)
+        self.answers.append(ans3)
+
+        # Use random.shuffle and to randomize the 3 options
+        random.shuffle(self.answers)
 
     def draw_answers(self):
-        # using random and remove draw the answers in a random order
-        a = self.a
-        n1 = random.choice(a)
-        a.remove(n1)
-        n2 = random.choice(a)
-        a.remove(n2)
-        n3 = a[0]
-        arcade.draw_text(n1, 150, 200,
-                         arcade.color.BLACK, font_size=60, anchor_x="center")
-        arcade.draw_text(n2, 400, 200,
-                         arcade.color.BLACK, font_size=60, anchor_x="center")
-        arcade.draw_text(n3, 670, 200,
-                         arcade.color.BLACK, font_size=60, anchor_x="center")
+        # Draw the boxes behind the options
+        arcade.draw_lrtb_rectangle_filled(70, 230, 300, 150, arcade.color.LIGHT_BLUE)
+        arcade.draw_lrtb_rectangle_filled(330, 470, 300, 150, arcade.color.LIGHT_BLUE)
+        arcade.draw_lrtb_rectangle_filled(600, 740, 300, 150, arcade.color.LIGHT_BLUE)
+
+        # x, y, n
+        coords = [
+            (150, 200, self.answers[0]),
+            (400, 200, self.answers[1]),
+            (670, 200, self.answers[2])
+        ]
+
+        for (x, y, n) in coords:
+            arcade.draw_text(
+                n, x, y,
+                arcade.color.BANANA_MANIA,
+                font_size=60,
+                anchor_x="center"
+            )
+    
+    # Creating function to check the mouse clicks
+    def on_mouse_press(self, x, y, button, modifiers):
+        # x_low, x_high, y_low, y_high, number
+        coords = [
+            (70, 230, 150, 300, self.answers[0]),
+            (330, 470, 150, 300, self.answers[1]),
+            (600, 740, 150, 300, self.answers[2])
+        ]
+
+        for (x_low, x_high, y_low, y_high, number) in coords:
+            if x_low < x < x_high and y_low < y < y_high:
+                if number == self.answer:
+                    print("Y")
+                else:
+                    print("N")
