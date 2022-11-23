@@ -1,7 +1,10 @@
+# Import the arcade library
 import arcade
 import arcade.gui
-from add_multiply_visuals import Addition, Multiplication, Matching
-
+# Import the views
+from views.match import Matching
+from views.addition import Addition
+from views.multiplication import Multiplication
 
 class HomeView(arcade.View):
     def __init__(self):
