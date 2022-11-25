@@ -70,9 +70,9 @@ class Multiplication(arcade.View):
 
     def draw_answers(self):
         # Draw the boxes behind the options
-        arcade.draw_lrtb_rectangle_filled(70, 230, 300, 150, arcade.color.LIGHT_BLUE)
-        arcade.draw_lrtb_rectangle_filled(330, 470, 300, 150, arcade.color.LIGHT_BLUE)
-        arcade.draw_lrtb_rectangle_filled(600, 740, 300, 150, arcade.color.LIGHT_BLUE)
+        arcade.draw_lrtb_rectangle_filled(70, 230, 300, 150, arcade.color.DARK_RED)
+        arcade.draw_lrtb_rectangle_filled(330, 470, 300, 150, arcade.color.DARK_RED)
+        arcade.draw_lrtb_rectangle_filled(600, 740, 300, 150, arcade.color.DARK_RED)
 
         # x, y, n
         coords = [
