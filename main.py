@@ -6,6 +6,7 @@ from views.match import Matching
 from views.addition import Addition
 from views.multiplication import Multiplication
 
+
 class HomeView(arcade.View):
     def __init__(self):
         super().__init__()

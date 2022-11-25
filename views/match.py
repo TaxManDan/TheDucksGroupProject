@@ -4,10 +4,12 @@ import arcade.gui
 # Import random library
 import random
 
+
 class Matching(arcade.View):
     def __init__(self):
         super().__init__()
         # set a background color
+        self.user_action = None
         arcade.set_background_color(arcade.color.CITRON)
         self.clear()
         # --- Required for all code that uses UI element,
@@ -28,6 +30,15 @@ class Matching(arcade.View):
         # --- Finish drawing ---
         arcade.finish_render()
         # Keep the window up until someone closes it.
+
+        # Creates group and centers the message box
+        self.v_box = arcade.gui.UIBoxLayout()
+        self.manager.add(
+            arcade.gui.UIAnchorWidget(
+                anchor_x="center_x",
+                anchor_y="center_y",
+                child=self.v_box)
+        )
 
     def text(self):
         arcade.draw_text(self.my_number,
@@ -59,7 +70,7 @@ class Matching(arcade.View):
             (350, 200, self.numbers[1]),
             (600, 200, self.numbers[2])
         ]
-        
+
         for (x, y, n) in coords:
             self.draw_visuals(n, x, y)
 
@@ -75,7 +86,7 @@ class Matching(arcade.View):
             else:
                 x = c
                 y -= 30
-    
+
     # Creating function to check the mouse clicks
     def on_mouse_press(self, x, y, button, modifiers):
         # x_low, x_high, y_low, y_high, number
@@ -89,5 +100,41 @@ class Matching(arcade.View):
             if x_low < x < x_high and y_low < y < y_high:
                 if number == self.my_number:
                     print("Y")
+                    message_box = arcade.gui.UIMessageBox(
+                        width=400,
+                        height=300,
+                        message_text=(
+                            "Correct! You got it right."
+                            "Would you like to play again?"
+                        ),
+                        callback=self.on_message_box_close,
+                        buttons=["Home", "Retry"]
+                    )
+
+                    self.manager.add(message_box)
                 else:
                     print("N")
+                    message_box = arcade.gui.UIMessageBox(
+                        width=400,
+                        height=300,
+                        message_text=(
+                            "Sorry! That wasn't correct."
+                            "Would you like to try again?"
+                        ),
+                        callback=self.on_message_box_close,
+                        buttons=["Home", "Retry"]
+                    )
+
+                    self.manager.add(message_box)
+
+    def on_draw(self):
+        self.clear()
+        self.manager.draw()
+
+    def on_message_box_close(self, button_text):
+        self.user_action = button_text
+
+        if self.user_action == "Home":
+            print("Home")
+        elif self.user_action == "Retry":
+            print("Retry")

@@ -1,7 +1,6 @@
 import arcade
 import arcade.gui
 
-from game import Correct
 from main import HomeView
 
 
@@ -25,34 +24,32 @@ class GameOverPrompt(arcade.Window):
                 child=self.v_box)
         )
 
-    def on_click_open(self):
-        # Displays proper user prompt based on if the player gets the question correct or not.
-        if Correct.game_over is True and Correct.player_correct is True:
-            message_box = arcade.gui.UIMessageBox(
-                width=400,
-                height=300,
-                message_text=(
-                    "Correct! You got it right."
-                    "Would you like to play again?"
-                ),
-                callback=self.on_message_box_close,
-                buttons=["Home", "Retry"]
-            )
+    def correct(self):
+        message_box = arcade.gui.UIMessageBox(
+            width=400,
+            height=300,
+            message_text=(
+                "Correct! You got it right."
+                "Would you like to play again?"
+            ),
+            callback=self.on_message_box_close,
+            buttons=["Home", "Retry"]
+        )
+        self.manager.add(message_box)
 
-            self.manager.add(message_box)
-        elif Correct.game_over is True and Correct.player_correct is False:
-            message_box = arcade.gui.UIMessageBox(
-                width=400,
-                height=300,
-                message_text=(
-                    "Sorry! That wasn't correct."
-                    "Would you like to try again?"
-                ),
-                callback=self.on_message_box_close,
-                buttons=["Home", "Retry"]
-            )
+    def incorrect(self):
+        message_box = arcade.gui.UIMessageBox(
+            width=400,
+            height=300,
+            message_text=(
+                "Sorry! That wasn't correct."
+                "Would you like to try again?"
+            ),
+            callback=self.on_message_box_close,
+            buttons=["Home", "Retry"]
+        )
 
-            self.manager.add(message_box)
+        self.manager.add(message_box)
 
     def on_draw(self):
         self.clear()
