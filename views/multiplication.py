@@ -6,49 +6,89 @@ import random
 
 class Multiplication(arcade.View):
     def __init__(self):
+        """Multiplication view, it is the game with multiplication.
+        
+        Starts by calling draw_board which makes background colors and general stuff in it then calls draw_question
+            draw question calls create_question then draw_problem and draw_answers
+                create_question creates the question ex. 7 * 11 and the answers ex. 77 35 89 and randomizes the answers
+                draw_problem only draws the problem
+                draw_answers only draws the answers
+        
+        Variables:
+            manager (UIManager): Instance of arcade's UI Manager
+            answer (int): The correct answer
+            answers (list): List of all 3 potential answers
+            n1 (int): The first part of the problem
+            n2 (int): The second part of the problem
+        """
         super().__init__()
-        # set a background color
-        self.user_action = None
+        self.draw_board()
+    
+    def draw_board(self):
+        """Draws the entire screen and creates the question"""
+        # Set a background color
         arcade.set_background_color(arcade.color.ALABAMA_CRIMSON)
+        
         self.clear()
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
+        
+        # Draw the board
+        arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.BURNT_ORANGE)
+        
+        self.draw_question() # Creates and draws the question
+        
+        arcade.finish_render()
+    
+    def draw_question(self):
+        """Creates and draws the problem/solution"""
+        self.create_question() # This will create the problem and potential solutions        
+        self.draw_problem() # This will draw the problem shown at the top
+        self.draw_answers() # This will draw the 3 potential answers
+    
+    def create_question(self):
+        """Creates the info for the question including the problem and the solution"""
+        # Creates the problem
 
-        # set the 2 numbers
+        # This empty list will hold the answers
+        self.answers = []
+
+        # Sets the values
         self.n1 = random.randrange(0, 12)
         self.n2 = random.randrange(0, 12)
-
-        # Set the answer and add to a list
+        # Calculates the answer and adds it to answers
         self.answer = self.n1 * self.n2
-        self.answers = [self.answer]
-
-        # draw the game
-        arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.BURNT_ORANGE)
-        self.set_answers()
-        self.draw_problem()
-        self.draw_answers()
-        arcade.finish_render()
-
-        # Creates group and centers the message box
-        self.v_box = arcade.gui.UIBoxLayout()
-        self.manager.add(
-            arcade.gui.UIAnchorWidget(
-                anchor_x="center_x",
-                anchor_y="center_y",
-                child=self.v_box)
+        self.answers.append(self.answer)
+        
+        
+        # Creates the extra solutions
+        # Randomly set the answers in range 0, 144 max is 12 * 12
+        self.answers.append(
+            random.choice(
+                [i for i in range(0, 144) if i not in self.answers]
+            )
+        )
+        
+        self.answers.append(
+            random.choice(
+                [i for i in range(0, 144) if i not in self.answers]
+            )
         )
 
+        # Use random.shuffle and to randomize the 3 options
+        random.shuffle(self.answers)
+
     def draw_problem(self):
-        # Draw the problem
+        """Draws the problem"""        
         # x, y, text
-        coords = [
+        part = [
             (200, 450, self.n1),
             (300, 450, "x"),
             (400, 450, self.n2),
             (550, 450, "=  ?")
         ]
 
-        for (x, y, text) in coords:
+        for (x, y, text) in part:
             arcade.draw_text(
                 text, x, y,
                 arcade.color.BLACK,
@@ -56,32 +96,21 @@ class Multiplication(arcade.View):
                 anchor_x="center"
             )
 
-    def set_answers(self):
-        # add the answers to list a in range 0,144 because max is 12*12
-        ans1 = self.answers[0]
-        ans2 = random.choice([i for i in range(0, 144) if i != ans1])
-        ans3 = random.choice([i for i in range(0, 144) if i != ans1 and i != ans2])
-
-        self.answers.append(ans2)
-        self.answers.append(ans3)
-
-        # Use random.shuffle and to randomize the 3 options
-        random.shuffle(self.answers)
-
     def draw_answers(self):
+        """Draws the 3 potential answers"""
         # Draw the boxes behind the options
         arcade.draw_lrtb_rectangle_filled(70, 230, 300, 150, arcade.color.DARK_RED)
         arcade.draw_lrtb_rectangle_filled(330, 470, 300, 150, arcade.color.DARK_RED)
         arcade.draw_lrtb_rectangle_filled(600, 740, 300, 150, arcade.color.DARK_RED)
 
         # x, y, n
-        coords = [
+        answers = [
             (150, 200, self.answers[0]),
             (400, 200, self.answers[1]),
             (670, 200, self.answers[2])
         ]
 
-        for (x, y, n) in coords:
+        for (x, y, n) in answers:
             arcade.draw_text(
                 n, x, y,
                 arcade.color.BANANA_MANIA,
@@ -89,8 +118,15 @@ class Multiplication(arcade.View):
                 anchor_x="center"
             )
     
-    # Creating function to check the mouse clicks
     def on_mouse_press(self, x, y, button, modifiers):
+        """Checks the area of mouse click to see if it is in the answers zones then displays the appropriate message.
+        
+        Arguments:
+            x (int): The x of the position where the user clicked
+            y (int): The y of the position where the user clicked
+            button (string): Button that is pressed
+            modifiers (string: All modifiers (shift, ctrl, num lock) pressed during this event
+        """
         # x_low, x_high, y_low, y_high, number
         coords = [
             (70, 230, 150, 300, self.answers[0]),
@@ -102,7 +138,7 @@ class Multiplication(arcade.View):
             if x_low < x < x_high and y_low < y < y_high:
                 if number == self.answer:
                     print("Y")
-                    print("Y")
+                    self.draw_board()
                     message_box = arcade.gui.UIMessageBox(
                         width=400,
                         height=300,
@@ -131,13 +167,17 @@ class Multiplication(arcade.View):
                     self.manager.add(message_box)
 
     def on_draw(self):
+        """Starts the drawing process"""
         self.clear()
         self.manager.draw()
 
     def on_message_box_close(self, button_text):
-        self.user_action = button_text
-
-        if self.user_action == "Home":
+        """Checks what the user chose while closing the message box
+        
+        Arguments:
+            button_text (string): The text of the button clicked
+        """
+        if button_text == "Home":
             print("Home")
-        elif self.user_action == "Retry":
+        elif button_text == "Retry":
             print("Retry")

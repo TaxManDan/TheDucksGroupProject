@@ -22,10 +22,6 @@ class HomeView(arcade.View):
         difficulty_button = arcade.gui.UIFlatButton(text="DIFFICULTY", width=200)
         play_button = arcade.gui.UIFlatButton(text="PLAY", width=200)
 
-        button_box = arcade.gui.UIBoxLayout()  # Create a box group to align the 'open' button in the center
-        button_box.add(help_button)  # Create a button. We'll click on this to open our window.
-        button_box.add(difficulty_button)
-        button_box.add(play_button)
         help_button.on_click = self.on_click_help  # Add a hook to run when we click on the button.
         difficulty_button.on_click = self.on_click_difficulty
         play_button.on_click = self.on_click_play
