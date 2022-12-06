@@ -34,7 +34,7 @@ class Matching(arcade.View):
         self.manager.enable()
         
         # Draw the board
-        arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.BABY_BLUE_EYES)
+        arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.CORN)
         
         self.draw_question() # Creates and draws the question
         
