@@ -9,7 +9,7 @@ class Multiplication(arcade.View):
         """Multiplication view, it is the game with multiplication.
         
         Starts by calling draw_board which makes background colors and general stuff in it then calls draw_question
-            draw question calls create_question then draw_problem and draw_answers
+            draw_question calls create_question then draw_problem and draw_answers
                 create_question creates the question ex. 7 * 11 and the answers ex. 77 35 89 and randomizes the answers
                 draw_problem only draws the problem
                 draw_answers only draws the answers
