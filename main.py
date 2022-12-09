@@ -107,6 +107,7 @@ class HomeView(arcade.View):
             message_text=(
                 "This is a math game that helps kids improve their arithmetic skills. The game has three difficulty levels: Easy, Normal, and Hard. In the Easy level, the game will show a number and the player has to match it with the correct amount of dots. In the Normal level, the game will show two numbers and the player has to either add or subtract them and select the correct answer. In the Hard level, the game will show two numbers and the player has to multiply them and select the correct answer. Good luck!"
             ),
+            callback=self.on_help_box_close,
             buttons=["Ok"]
         )
 
@@ -123,6 +124,17 @@ class HomeView(arcade.View):
         """
         self.difficulty = button_text
         print(self.difficulty)
+        
+        self.on_draw()
+        self.draw_board()
+        self.manager.draw()
+        arcade.finish_render()
+    
+    def on_help_box_close(self, _):
+        self.on_draw()
+        self.draw_board()
+        self.manager.draw()
+        arcade.finish_render()
 
     def on_draw(self):
         """Starts the drawing process"""
