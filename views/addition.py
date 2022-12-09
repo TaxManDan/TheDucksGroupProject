@@ -157,6 +157,7 @@ class Addition(arcade.View):
             (600, 740, 150, 300, self.answers[2])
         ]
         
+        # Check if the player's mouse click is within the coordinates of a potential answer and call create_message_box.
         for (x_low, x_high, y_low, y_high, number) in coords:
             if x_low < x and x < x_high and y_low < y and y < y_high:
                 correct = number == self.answer
@@ -171,9 +172,6 @@ class Addition(arcade.View):
             correct (boolean): If the user was right or not
         """
         self.answered = True # For if this is up.
-        
-        # Set a background color
-        arcade.set_background_color(arcade.color.AFRICAN_VIOLET)
         
         # Sets text
         if correct:

@@ -67,11 +67,11 @@ class HomeView(arcade.View):
     def on_click_play(self, _):
         """Gets called when the user clicks the play button, starts the game depending on difficulty"""
         if self.difficulty == "Easy":
-            game_view = Matching()
+            game_view = Matching(HomeView)
         elif self.difficulty == "Normal":
             game_view = Addition(HomeView)
         else:
-            game_view = Multiplication()
+            game_view = Multiplication(HomeView)
         self.window.show_view(game_view)
 
     def on_click_difficulty(self, _):

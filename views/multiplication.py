@@ -5,23 +5,33 @@ import arcade.gui
 import random
 
 class Multiplication(arcade.View):
-    def __init__(self):
+    def __init__(self, HomeView):
         """Multiplication view, it is the game with multiplication.
         
-        Starts by calling draw_board which makes background colors and general stuff in it then calls draw_question
-            draw_question calls create_question then draw_problem and draw_answers
-                create_question creates the question ex. 7 * 11 and the answers ex. 77 35 89 and randomizes the answers
-                draw_problem only draws the problem
-                draw_answers only draws the answers
+        Strucutre:
+            Starts by calling draw_board which makes background colors and general stuff in it then calls draw_question
+                draw_question calls create_question then draw_problem and draw_answers
+                    create_question creates the question ex. 7 * 11 and the answers ex. 77 35 89 and randomizes the answers
+                    draw_problem only draws the problem
+                    draw_answers only draws the answers
+            
+            on_mouse_press gets called after the user clicks, if the prompt is up (check self.answered) returns otherwise
+            it calls create_message_box
+                create_message_box creates a message box that either sends the user home or lets them play again
+                    It calls on_message_box_close when the buttons get picked and does the action.
         
         Variables:
             manager (UIManager): Instance of arcade's UI Manager
+            HomeView (HomeView): HomeView to be called when user wants to go back
             answer (int): The correct answer
             answers (list): List of all 3 potential answers
+            answered (boolean): If the user has the prompt open
             n1 (int): The first part of the problem
             n2 (int): The second part of the problem
         """
         super().__init__()
+        self.HomeView = HomeView
+        self.answered = False
         self.draw_board()
     
     def draw_board(self):
@@ -133,51 +143,95 @@ class Multiplication(arcade.View):
             (330, 470, 150, 300, self.answers[1]),
             (600, 740, 150, 300, self.answers[2])
         ]
-
+        
+        # Check if the player's mouse click is within the coordinates of a potential answer and call create_message_box.
         for (x_low, x_high, y_low, y_high, number) in coords:
-            if x_low < x < x_high and y_low < y < y_high:
-                if number == self.answer:
-                    print("Y")
-                    self.draw_board()
-                    message_box = arcade.gui.UIMessageBox(
-                        width=400,
-                        height=300,
-                        message_text=(
-                            "Correct! You got it right."
-                            "Would you like to play again?"
-                        ),
-                        callback=self.on_message_box_close,
-                        buttons=["Home", "Retry"]
-                    )
+            if x_low < x and x < x_high and y_low < y and y < y_high:
+                correct = number == self.answer
+                print(correct)
+                self.create_message_box(correct)
+    
+    def create_message_box(self, correct):
+        """Creates a message box with telling the user if they got it right and
+        letting them go back to the game or go home
+        
+        Arguments:
+            correct (boolean): If the user was right or not
+        """
+        self.answered = True # For if this is up.
+        
+        # Sets text
+        if correct:
+            text = f"Correct! It indeed was {self.answer}.\nDo you want to play again or go home?"
+        else:
+            text = f"Sorry! The correct answer was {self.answer}.\nDo you want to play again or go home?"
+        
+        # Create the message box
+        message_box = arcade.gui.UIMessageBox(
+            width=375,
+            height=250,
+            message_text=text,
+            callback = self.on_message_box_close,
+            buttons=["Play again!", "Go home"]
+        )
 
-                    self.manager.add(message_box)
-                else:
-                    print("N")
-                    message_box = arcade.gui.UIMessageBox(
-                        width=400,
-                        height=300,
-                        message_text=(
-                            "Sorry! That wasn't correct."
-                            "Would you like to try again?"
-                        ),
-                        callback=self.on_message_box_close,
-                        buttons=["Home", "Retry"]
-                    )
+        # Add the message box to the UI manager
+        self.manager.add(message_box)
+        
+        # Draw the screen
+        self.manager.draw()
+        arcade.finish_render()
 
-                    self.manager.add(message_box)
+    def on_message_box_close(self, button_text):
+        """Called when message box is closed and either sends user home or back
+        to their game.
+
+        Arguments:
+            button_text (string): The text for the button pressed
+        """
+        self.answered = False # To say this prompt is gone
+        
+        if button_text == "Play again!":
+            # Call the draw_question method to show the next problem
+            self.draw_board()
+        else:
+            # Create an instance of the HomeView class
+            home_view = self.HomeView()
+            self.window.show_view(home_view)
+
+        # for (x_low, x_high, y_low, y_high, number) in coords:
+        #     if x_low < x < x_high and y_low < y < y_high:
+        #         if number == self.answer:
+        #             print("Y")
+        #             self.draw_board()
+        #             message_box = arcade.gui.UIMessageBox(
+        #                 width=400,
+        #                 height=300,
+        #                 message_text=(
+        #                     "Correct! You got it right."
+        #                     "Would you like to play again?"
+        #                 ),
+        #                 callback=self.on_message_box_close,
+        #                 buttons=["Home", "Retry"]
+        #             )
+
+        #             self.manager.add(message_box)
+        #         else:
+        #             print("N")
+        #             message_box = arcade.gui.UIMessageBox(
+        #                 width=400,
+        #                 height=300,
+        #                 message_text=(
+        #                     "Sorry! That wasn't correct."
+        #                     "Would you like to try again?"
+        #                 ),
+        #                 callback=self.on_message_box_close,
+        #                 buttons=["Home", "Retry"]
+        #             )
+
+        #             self.manager.add(message_box)
 
     def on_draw(self):
         """Starts the drawing process"""
         self.clear()
         self.manager.draw()
-
-    def on_message_box_close(self, button_text):
-        """Checks what the user chose while closing the message box
-        
-        Arguments:
-            button_text (string): The text of the button clicked
-        """
-        if button_text == "Home":
-            print("Home")
-        elif button_text == "Retry":
-            print("Retry")
