@@ -105,8 +105,7 @@ class HomeView(arcade.View):
             width=375,
             height=250,
             message_text=(
-                "This is a Help Message box for giving users in game hints."
-                "Click Ok to close."
+                "This is a math game that helps kids improve their arithmetic skills. The game has three difficulty levels: Easy, Normal, and Hard. In the Easy level, the game will show a number and the player has to match it with the correct amount of dots. In the Normal level, the game will show two numbers and the player has to either add or subtract them and select the correct answer. In the Hard level, the game will show two numbers and the player has to multiply them and select the correct answer. Good luck!"
             ),
             buttons=["Ok"]
         )
