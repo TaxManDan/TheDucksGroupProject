@@ -21,11 +21,17 @@ class HomeView(arcade.View):
         super().__init__()
         self.difficulty = "Normal"
         
+        # Set a background color
+        arcade.set_background_color(arcade.color.LIGHT_CORNFLOWER_BLUE)
+        
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
         self.on_draw()
         
         self.draw_board()
+        self.manager.draw()
+        
+        arcade.finish_render()
     
     def draw_board(self):
         """Draws the entire screen and creates the question"""
@@ -88,6 +94,9 @@ class HomeView(arcade.View):
         )
 
         self.manager.add(message_box)
+        
+        self.manager.draw()
+        arcade.finish_render()
 
     def on_click_help(self, _):
         """Gets called when the user clicks the help button, shows a description of the game"""
@@ -103,6 +112,9 @@ class HomeView(arcade.View):
         )
 
         self.manager.add(message_box)
+        
+        self.manager.draw()
+        arcade.finish_render()
 
     def on_difficulty_box_close(self, button_text):
         """Gets called when the difficulty box closes, sets the difficulty based on the button pressed

@@ -174,6 +174,9 @@ class Multiplication(arcade.View):
             callback = self.on_message_box_close,
             buttons=["Play again!", "Go home"]
         )
+        
+        # Draw the board
+        arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.BURNT_ORANGE)
 
         # Add the message box to the UI manager
         self.manager.add(message_box)
@@ -193,43 +196,11 @@ class Multiplication(arcade.View):
         
         if button_text == "Play again!":
             # Call the draw_question method to show the next problem
+            self.on_draw()
             self.draw_board()
         else:
-            # Create an instance of the HomeView class
-            home_view = self.HomeView()
-            self.window.show_view(home_view)
-
-        # for (x_low, x_high, y_low, y_high, number) in coords:
-        #     if x_low < x < x_high and y_low < y < y_high:
-        #         if number == self.answer:
-        #             print("Y")
-        #             self.draw_board()
-        #             message_box = arcade.gui.UIMessageBox(
-        #                 width=400,
-        #                 height=300,
-        #                 message_text=(
-        #                     "Correct! You got it right."
-        #                     "Would you like to play again?"
-        #                 ),
-        #                 callback=self.on_message_box_close,
-        #                 buttons=["Home", "Retry"]
-        #             )
-
-        #             self.manager.add(message_box)
-        #         else:
-        #             print("N")
-        #             message_box = arcade.gui.UIMessageBox(
-        #                 width=400,
-        #                 height=300,
-        #                 message_text=(
-        #                     "Sorry! That wasn't correct."
-        #                     "Would you like to try again?"
-        #                 ),
-        #                 callback=self.on_message_box_close,
-        #                 buttons=["Home", "Retry"]
-        #             )
-
-        #             self.manager.add(message_box)
+            # Return the user to the main view
+            self.window.show_view(self.HomeView())
 
     def on_draw(self):
         """Starts the drawing process"""

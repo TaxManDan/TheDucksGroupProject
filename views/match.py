@@ -182,6 +182,9 @@ class Matching(arcade.View):
             callback = self.on_message_box_close,
             buttons=["Play again!", "Go home"]
         )
+        
+        # Draw the board
+        arcade.draw_lrtb_rectangle_filled(0, 800, 400, 0, arcade.color.CORN)
 
         # Add the message box to the UI manager
         self.manager.add(message_box)
@@ -201,11 +204,11 @@ class Matching(arcade.View):
         
         if button_text == "Play again!":
             # Call the draw_question method to show the next problem
+            self.on_draw()
             self.draw_board()
         else:
-            # Create an instance of the HomeView class
-            home_view = self.HomeView()
-            self.window.show_view(home_view)
+            # Return the user to the main view
+            self.window.show_view(self.HomeView())
 
     def on_draw(self):
         """Starts the drawing process"""
