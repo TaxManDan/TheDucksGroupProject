@@ -30,3 +30,9 @@ To install The Math Game, follow these steps:
 4. Navigate to the directory where you downloaded the game files.
 5. Run the game by executing the following command:
 ```python main.py```
+
+# Authors
+* Kylie Furner
+* Daniel Rasmussen
+* Caleb Hatch
+* Danny Tolman
