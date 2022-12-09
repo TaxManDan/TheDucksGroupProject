@@ -128,8 +128,8 @@ class Matching(arcade.View):
         Arguments:
             x (int): The x of the position where the user clicked
             y (int): The y of the position where the user clicked
-            button (string): Button that is pressed
-            modifiers (string: All modifiers (shift, ctrl, num lock) pressed during this event
+            button (int): Button that is pressed
+            modifiers (int: All modifiers (shift, ctrl, num lock) pressed during this event
         """
         # x_low, x_high, y_low, y_high, number
         coords = [

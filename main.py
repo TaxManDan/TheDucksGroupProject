@@ -20,16 +20,17 @@ class HomeView(arcade.View):
         """
         super().__init__()
         self.difficulty = "Normal"
+        
+        self.manager = arcade.gui.UIManager()
+        self.manager.enable()
+        self.on_draw()
+        
         self.draw_board()
     
     def draw_board(self):
         """Draws the entire screen and creates the question"""
         # Set a background color
         arcade.set_background_color(arcade.color.LIGHT_CORNFLOWER_BLUE)
-        
-        self.clear()
-        self.manager = arcade.gui.UIManager()
-        self.manager.enable()
                 
         self.draw_buttons() # Creates and draws the buttons
     
@@ -68,7 +69,7 @@ class HomeView(arcade.View):
         if self.difficulty == "Easy":
             game_view = Matching()
         elif self.difficulty == "Normal":
-            game_view = Addition()
+            game_view = Addition(HomeView)
         else:
             game_view = Multiplication()
         self.window.show_view(game_view)
